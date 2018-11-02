@@ -34,6 +34,18 @@ This will change GDM wallpaper to wallpaper-gnome.png inside .rpm file.
 If you want change this image, you need to Build new .rpm file.
 ```
 
+# Recovering
+
+If GDM load failed, then press ALT+F6 and:
+
+```shell
+# dnf remove set-gdm-wallpaper
+OR 
+# rpm-ostree uninstall set-gdm-wallpaper
+OR
+# cp /usr/share/gnome-shell/gnome-shell-theme.gresource.backup /usr/share/gnome-shell/gnome-shell-theme.gresource
+```
+
 # Build from source
 ```shell
 $ cd /path/to/source

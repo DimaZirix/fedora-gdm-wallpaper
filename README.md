@@ -6,11 +6,13 @@ Fedora 28, Fedora 29, Fedora 29 Silverblue
 
 # Install
 ```shell
+$ wget https://github.com/DimaZirix/fedora-gdm-wallpaper/releases/download/set-gdm-wallpaper-1-1.fc29/set-gdm-wallpaper-1-1.fc29.noarch.rpm
 $ sudo dnf install set-gdm-wallpaper-1-1.fc29.noarch.rpm
 ```
 
 OR
 ```shell
+$ wget https://github.com/DimaZirix/fedora-gdm-wallpaper/releases/download/set-gdm-wallpaper-1-1.fc29/set-gdm-wallpaper-1-1.fc29.noarch.rpm
 $ sudo rpm-ostree install
 ```
 

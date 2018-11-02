@@ -1,0 +1,58 @@
+#! /bin/sh
+
+# dnf install -y glib2-devel
+
+set -e
+
+if [ -n "$1" ]
+then
+  workdir=$(mktemp -d)
+  image="$1"
+else
+  workdir="/usr/share/gnome-shell/wallpaper"
+  image="$workdir/gdm-image.png"
+fi
+
+if [ ! -f $image ]
+then
+  echo "File not found: \"$image\" "
+  exit
+fi
+
+echo "Updating wallpaper..."
+
+mkdir $workdir/theme
+
+gst=/usr/share/gnome-shell/gnome-shell-theme.gresource
+for r in `gresource list $gst`; do
+        gresource extract $gst $r >$workdir${r/#\/org\/gnome\/shell/}
+done
+
+cp $image $workdir/theme/image.jpg
+
+echo '<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/org/gnome/shell/theme">' > $workdir/gnome-shell-theme.gresource.xml
+
+ls $workdir/theme/ | sed 's/.*/    <file>&<\/file>/' >> $workdir/gnome-shell-theme.gresource.xml
+
+echo '  </gresource>
+</gresources>' >> $workdir/gnome-shell-theme.gresource.xml
+
+sed -i -e 's/background: #2e3436 url(resource:\/\/\/org\/gnome\/shell\/theme\/noise-texture.png);/background: #2e3436 url(resource:\/\/\/org\/gnome\/shell\/theme\/image.jpg);background-size: cover;/g' $workdir/theme/gnome-shell.css
+
+echo "// set-gdm-wallpaper" >> $workdir/theme/gnome-shell.css
+
+cd $workdir/theme/
+glib-compile-resources $workdir/gnome-shell-theme.gresource.xml
+
+if ! grep -q "set-gdm-wallpaper" /usr/share/gnome-shell/gnome-shell-theme.gresource; then
+  cp /usr/share/gnome-shell/gnome-shell-theme.gresource /usr/share/gnome-shell/gnome-shell-theme.gresource.backup
+fi
+
+
+cp $workdir/gnome-shell-theme.gresource /usr/share/gnome-shell/
+
+rm -rf $workdir/theme
+
+echo "Done!"

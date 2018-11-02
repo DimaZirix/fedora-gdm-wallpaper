@@ -61,8 +61,8 @@ fi
 
 cp -f $workdir/gnome-shell-theme.gresource /usr/share/gnome-shell/
 
-#rm -rf $workdir/theme
-#rm -f $workdir/gnome-shell-theme.gresource.xml
-#rm -f $workdir/gnome-shell-theme.gresource
+rm -rf $workdir/theme
+rm -f $workdir/gnome-shell-theme.gresource.xml
+rm -f $workdir/gnome-shell-theme.gresource
 
 echo "Done!"

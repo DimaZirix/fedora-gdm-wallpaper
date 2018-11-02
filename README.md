@@ -4,9 +4,6 @@ Script for changing wallpaper on login (GNOME Display Manager / GDM) screen.
 Tested on:
 Fedora 28, Fedora 29, Fedora 29 Silverblue
 
-# Fedora 29 Silverblue
-Fedora Silverblue have immutable file system. GDM wallpaper can be changed only by install/reinstall rpm.
-
 # Install
 ```shell
 $ wget https://github.com/DimaZirix/fedora-gdm-wallpaper/releases/download/set-gdm-wallpaper-1-1.fc29/set-gdm-wallpaper-1-1.fc29.noarch.rpm

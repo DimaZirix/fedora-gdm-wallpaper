@@ -20,11 +20,21 @@ $ sudo rpm-ostree install set-gdm-wallpaper-1-1.fc29.noarch.rpm
 ```
 
 # Usage
+Fedora 28+:
 ```shell
 $ sudo set-gdm-wallpaper /path/to/image.png
 
 Requires: glib2-devel
 $ sudo dnf install glib2-devel
+```
+Fedora Silverblue
+```shell
+Fedora Silverblue have immutable file system. GDM wallpaper can be changed only by install/reinstall rpm.
+
+$ sudo rpm-ostree install set-gdm-wallpaper-1-1.fc29.noarch.rpm
+
+This will change GDM wallpaper to wallpaper-gnome.png inside .rpm file.
+If you want change this image, you need to Build new .rpm file.
 ```
 
 # Build from source

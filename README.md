@@ -35,6 +35,7 @@ $ fedpkg --release f29 lint
 
 Requires: fedora-packager and fedora-review
 $ sudo dnf install fedora-packager fedora-review
+OR
 $ sudo rpm-ostree install fedora-packager fedora-review
 See: https://docs.fedoraproject.org/en-US/quick-docs/creating-rpm-packages/index.html
 ```

@@ -47,4 +47,5 @@ $ sudo rpm-ostree install fedora-packager fedora-review
 See: https://docs.fedoraproject.org/en-US/quick-docs/creating-rpm-packages/index.html
 ```
 
-
+# Credit and Licences
+wallpaper-gnome.png: https://www.opendesktop.org/s/Gnome/p/1071929/

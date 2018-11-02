@@ -9,6 +9,7 @@ Source1: set-gdm-wallpaper
 License: Public Domain
 
 Requires(post): info
+Requires(postun): info
 
 Requires: glib2-devel
 
@@ -25,10 +26,16 @@ mkdir -p %{buildroot}/%{_bindir}
 install -p -m 755 %{SOURCE1} %{buildroot}/%{_bindir}
 
 %post
-%{_bindir}/set-gdm-wallpaper
+set-gdm-wallpaper
 
 %files
 %{_bindir}/set-gdm-wallpaper
 /usr/share/gnome-shell/wallpaper/wallpaper-gnome.png
+
+%postun
+if [ $1 -gt 0 ] ; then
+  cp -f /usr/share/gnome-shell/gnome-shell-theme.gresource.backup /usr/share/gnome-shell/gnome-shell-theme.gresource
+fi
+
 
 %changelog

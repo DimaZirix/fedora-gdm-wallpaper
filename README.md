@@ -1,4 +1,4 @@
-# Fedora GDM wallpaper changer
+# Fedora GDM Login screen background changer
 Script for changing wallpaper on login (GNOME Display Manager / GDM) screen.
 
 Tested on:

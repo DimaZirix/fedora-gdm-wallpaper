@@ -4,7 +4,7 @@ Release: 2
 Summary: set-gdm-wallpaper
 
 Source0: wallpaper-gnome.png
-Source1: set-gdm-wallpaper
+Source1: set-gdm-wallpaper.sh
 
 License: Public Domain
 
@@ -29,7 +29,7 @@ install -p -m 755 %{SOURCE1} %{buildroot}/%{_bindir}
 set-gdm-wallpaper --rpm
 
 %files
-%{_bindir}/set-gdm-wallpaper
+%{_bindir}/set-gdm-wallpaper.sh
 /usr/share/gnome-shell/wallpaper/wallpaper-gnome.png
 
 %preun 

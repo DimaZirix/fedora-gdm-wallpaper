@@ -10,7 +10,7 @@ But should work with any distro with /usr/share/gnome-shell/gnome-shell-theme.gr
 
 # Usage
 ```shell
-$ sudo set-gdm-wallpaper.sh /path/to/image.png
+# set-gdm-wallpaper.sh /path/to/image.png
 
 Requires gresource binary (glib2 or glib2-devel library):
 Fedora: 
@@ -20,7 +20,7 @@ Fedora Silverblue
 ```shell
 Fedora Silverblue have immutable file system. GDM wallpaper can be changed only by install/reinstall rpm.
 
-$ sudo rpm-ostree install set-gdm-wallpaper-1-2.noarch.rpm
+# rpm-ostree install set-gdm-wallpaper-1-2.noarch.rpm
 
 This will change GDM wallpaper to wallpaper-gnome.png inside .rpm file.
 If you want change this image, you need to Build new .rpm file.
@@ -29,14 +29,12 @@ If you want change this image, you need to Build new .rpm file.
 # Install
 Fedora 28+:
 ```shell
-$ wget https://github.com/DimaZirix/fedora-gdm-wallpaper/releases/download/1.2/set-gdm-wallpaper-1-2.noarch.rpm
-$ sudo dnf install set-gdm-wallpaper-1-2.noarch.rpm
+# dnf install set-gdm-wallpaper-1-2.noarch.rpm
 ```
 
 Fedora Silverblue
 ```shell
-$ wget https://github.com/DimaZirix/fedora-gdm-wallpaper/releases/download/1.2/set-gdm-wallpaper-1-2.noarch.rpm
-$ sudo rpm-ostree install set-gdm-wallpaper-1-2.noarch.rpm
+# rpm-ostree install set-gdm-wallpaper-1-2.noarch.rpm
 ```
 # Recovering
 
@@ -60,9 +58,9 @@ $ fedpkg --release f29 local
 $ fedpkg --release f29 lint
 
 Requires: fedora-packager and fedora-review
-$ sudo dnf install fedora-packager fedora-review
+# dnf install fedora-packager fedora-review
 OR
-$ sudo rpm-ostree install fedora-packager fedora-review
+# rpm-ostree install fedora-packager fedora-review
 See: https://docs.fedoraproject.org/en-US/quick-docs/creating-rpm-packages/index.html
 ```
 

@@ -1,6 +1,6 @@
 Name:    set-gdm-wallpaper
 Version: 1
-Release: 1.1%{?dist}
+Release: 2
 Summary: set-gdm-wallpaper
 
 Source0: wallpaper-gnome.png

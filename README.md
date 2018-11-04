@@ -1,52 +1,58 @@
-# Fedora GDM Login screen background changer
-Script for changing wallpaper on login (GNOME Display Manager / GDM) screen.
+# GDM Login screen background changer
+Script for GNOME 3.16+ with GNOME Shell themes packed inside /usr/share/gnome-shell/gnome-shell-theme.gresource.
 
-Tested on:
+This script allows change background on login screen.
+
+# Tested on:
 Fedora 28, Fedora 29, Fedora 29 Silverblue
-
-# Install
-```shell
-$ wget https://github.com/DimaZirix/fedora-gdm-wallpaper/releases/download/set-gdm-wallpaper-1-1.fc29/set-gdm-wallpaper-1-1.fc29.noarch.rpm
-$ sudo dnf install set-gdm-wallpaper-1-1.fc29.noarch.rpm
-```
-
-OR
-```shell
-$ wget https://github.com/DimaZirix/fedora-gdm-wallpaper/releases/download/set-gdm-wallpaper-1-1.fc29/set-gdm-wallpaper-1-1.fc29.noarch.rpm
-$ sudo rpm-ostree install set-gdm-wallpaper-1-1.fc29.noarch.rpm
-```
+But should work with any distro with /usr/share/gnome-shell/gnome-shell-theme.gresource file.
 
 # Usage
-Fedora 28+:
 ```shell
-$ sudo set-gdm-wallpaper /path/to/image.png
+$ sudo set-gdm-wallpaper.sh /path/to/image.png
 
-Requires: glib2-devel
-$ sudo dnf install glib2-devel
+Requires gresource binary (glib2 or glib2-devel library):
+Fedora: 
+# dnf install glib2-devel
 ```
 Fedora Silverblue
 ```shell
 Fedora Silverblue have immutable file system. GDM wallpaper can be changed only by install/reinstall rpm.
 
-$ sudo rpm-ostree install set-gdm-wallpaper-1-1.fc29.noarch.rpm
+$ sudo rpm-ostree install set-gdm-wallpaper-1-2.noarch.rpm
 
 This will change GDM wallpaper to wallpaper-gnome.png inside .rpm file.
 If you want change this image, you need to Build new .rpm file.
 ```
 
+# Install
+For fedora 28+
+```shell
+$ wget https://github.com/DimaZirix/fedora-gdm-wallpaper/releases/download/1.2/set-gdm-wallpaper-1-2.noarch.rpm
+$ sudo dnf install set-gdm-wallpaper-1-2.noarch.rpm
+```
+
+OR
+```shell
+$ wget https://github.com/DimaZirix/fedora-gdm-wallpaper/releases/download/1.2/set-gdm-wallpaper-1-2.noarch.rpm
+$ sudo rpm-ostree install set-gdm-wallpaper-1-2.noarch.rpm
+```
 # Recovering
 
 If GDM load failed, then press ALT+F6 and:
 
 ```shell
+# set-gdm-wallpaper --uninstall
+OR
+# cp /usr/share/gnome-shell/gnome-shell-theme.gresource.backup /usr/share/gnome-shell/gnome-shell-theme.gresource
+
+OR delete RPM:
 # dnf remove set-gdm-wallpaper
 OR 
 # rpm-ostree uninstall set-gdm-wallpaper
-OR
-# cp /usr/share/gnome-shell/gnome-shell-theme.gresource.backup /usr/share/gnome-shell/gnome-shell-theme.gresource
 ```
 
-# Build from source
+# Build RPM from source
 ```shell
 $ cd /path/to/source
 $ fedpkg --release f29 local

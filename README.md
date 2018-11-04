@@ -27,13 +27,13 @@ If you want change this image, you need to Build new .rpm file.
 ```
 
 # Install
-For fedora 28+
+Fedora 28+:
 ```shell
 $ wget https://github.com/DimaZirix/fedora-gdm-wallpaper/releases/download/1.2/set-gdm-wallpaper-1-2.noarch.rpm
 $ sudo dnf install set-gdm-wallpaper-1-2.noarch.rpm
 ```
 
-OR
+Fedora Silverblue
 ```shell
 $ wget https://github.com/DimaZirix/fedora-gdm-wallpaper/releases/download/1.2/set-gdm-wallpaper-1-2.noarch.rpm
 $ sudo rpm-ostree install set-gdm-wallpaper-1-2.noarch.rpm

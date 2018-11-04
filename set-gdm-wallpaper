@@ -17,7 +17,12 @@ fi
 
 if [ "$1" == "--uninstall" ]
 then
-  cp -f /usr/share/gnome-shell/gnome-shell-theme.gresource.backup /usr/share/gnome-shell/gnome-shell-theme.gresource
+  if grep -q "wallpaper-gdm.png" /usr/share/gnome-shell/gnome-shell-theme.gresource; then
+    cp -f /usr/share/gnome-shell/gnome-shell-theme.gresource.backup /usr/share/gnome-shell/gnome-shell-theme.gresource
+
+    echo 'gnome-shell-theme.gresource recovered';
+  fi
+
   exit
 fi
 

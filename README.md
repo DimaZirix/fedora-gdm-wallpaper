@@ -43,7 +43,7 @@ $ sudo rpm-ostree install set-gdm-wallpaper-1-2.noarch.rpm
 If GDM load failed, then press ALT+F6 and:
 
 ```shell
-# set-gdm-wallpaper --uninstall
+# set-gdm-wallpaper.sh --uninstall
 OR
 # cp /usr/share/gnome-shell/gnome-shell-theme.gresource.backup /usr/share/gnome-shell/gnome-shell-theme.gresource
 

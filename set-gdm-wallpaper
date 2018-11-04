@@ -1,7 +1,5 @@
 #! /bin/sh
 
-# dnf install -y glib2-devel
-
 set -e
 
 if ! hash gresource 2>/dev/null; then
@@ -9,13 +7,26 @@ if ! hash gresource 2>/dev/null; then
   exit 1
 fi
 
-if [ -n "$1" ]
+if [ ! -n "$1" ]
 then
-  workdir=$(mktemp -d)
-  image="$1"
-else
-  workdir="/usr/share/gnome-shell/wallpaper"
+  echo 'Usage:';
+  echo '  set-gdm-wallpaper /path/to/image';
+  echo '  set-gdm-wallpaper --uninstall';
+  exit 1
+fi
+
+if [ "$1" == "--uninstall" ]
+then
+  cp -f /usr/share/gnome-shell/gnome-shell-theme.gresource.backup /usr/share/gnome-shell/gnome-shell-theme.gresource
+  exit
+fi
+
+workdir="/usr/share/gnome-shell/wallpaper"
+
+if [ "$1" == "--rpm" ]
   image="$workdir/wallpaper-gnome.png"
+else
+  image="$1"
 fi
 
 if [ ! -f $image ]
@@ -28,26 +39,23 @@ echo "Updating wallpaper..."
 
 mkdir -p $workdir/theme
 
-echo '<?xml version="1.0" encoding="UTF-8"?>
-<gresources>
-  <gresource prefix="/org/gnome/shell/theme">' > $workdir/gnome-shell-theme.gresource.xml
+echo '<?xml version="1.0" encoding="UTF-8"?>' > $workdir/gnome-shell-theme.gresource.xml
+echo '<gresources><gresource prefix="/org/gnome/shell/theme">' >> $workdir/gnome-shell-theme.gresource.xml
 
-gst=/usr/share/gnome-shell/gnome-shell-theme.gresource
-for r in `gresource list $gst`; do
+for r in `gresource list /usr/share/gnome-shell/gnome-shell-theme.gresource`; do
   gfile="${r#\/org\/gnome\/shell\/theme/}";
   mkdir -p "$(dirname $workdir/theme/$gfile)"
 
   if [ "$gfile" != "wallpaper-gdm.png" ]; then
-    gresource extract $gst $r >$workdir/theme/$gfile
-    echo "    <file>$gfile</file>" >> $workdir/gnome-shell-theme.gresource.xml
+    gresource extract /usr/share/gnome-shell/gnome-shell-theme.gresource $r >$workdir/theme/$gfile
+    echo "<file>$gfile</file>" >> $workdir/gnome-shell-theme.gresource.xml
   fi
 done
 
-echo "    <file>wallpaper-gdm.png</file>" >> $workdir/gnome-shell-theme.gresource.xml
+echo "<file>wallpaper-gdm.png</file>" >> $workdir/gnome-shell-theme.gresource.xml
 cp -f $image $workdir/theme/wallpaper-gdm.png
 
-echo '  </gresource>
-</gresources>' >> $workdir/gnome-shell-theme.gresource.xml
+echo '</gresource></gresources>' >> $workdir/gnome-shell-theme.gresource.xml
 
 sed -i -e 's/background: #2e3436 url(resource:\/\/\/org\/gnome\/shell\/theme\/noise-texture.png);/background: #2e3436 url(resource:\/\/\/org\/gnome\/shell\/theme\/wallpaper-gdm.png);background-size: cover;/g' $workdir/theme/gnome-shell.css
 

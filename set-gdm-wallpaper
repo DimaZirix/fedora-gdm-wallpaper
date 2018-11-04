@@ -24,6 +24,7 @@ fi
 workdir="/usr/share/gnome-shell/wallpaper"
 
 if [ "$1" == "--rpm" ]
+then
   image="$workdir/wallpaper-gnome.png"
 else
   image="$1"

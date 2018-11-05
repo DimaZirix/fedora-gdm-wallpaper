@@ -3,7 +3,12 @@
 set -e
 
 if ! hash gresource 2>/dev/null; then
-  echo "Library glib2-devel not found. dnf install -y glib2-devel"
+  echo "gresource binary not found. "
+  echo " "
+  echo "Please install glib2 or glib2-devel"
+  echo " "
+  echo "Fedora:"
+  echo "# dnf install glib2-devel"
   exit 1
 fi
 

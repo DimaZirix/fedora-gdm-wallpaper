@@ -4,7 +4,7 @@ Script for GNOME 3.16+ with GNOME Shell themes packed inside /usr/share/gnome-sh
 This script allows change background on login screen.
 
 # Tested on:
-Fedora 28, Fedora 29, Fedora 29 Silverblue
+Fedora 28, Fedora 29, Fedora 30 and Silverblue versions
 
 But should work on any distro with /usr/share/gnome-shell/gnome-shell-theme.gresource file.
 

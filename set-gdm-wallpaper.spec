@@ -1,7 +1,7 @@
-Name:    set-gdm-wallpaper
+Name:    gdm-wallpaper
 Version: 1
 Release: 2
-Summary: set-gdm-wallpaper
+Summary: gdm-wallpaper
 
 Source0: wallpaper-gnome.png
 Source1: set-gdm-wallpaper.sh
@@ -16,7 +16,7 @@ Requires: glib2-devel
 BuildArch: noarch
 
 %description
-set-gdm-wallpaper
+gdm-wallpaper
 
 %install
 mkdir -p %{buildroot}/usr/share/gnome-shell/wallpaper/

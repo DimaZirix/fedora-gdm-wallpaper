@@ -27,7 +27,14 @@ If you want change this image, you need to Build new .rpm file.
 ```
 
 # Install
-Fedora 28+:
+```
+$ dnf copr enable zirix/gdm-wallpaper 
+$ dnf install gdm-wallpaper
+$ set-gdm-wallpaper.sh /path/to/image.png
+```
+
+OR
+
 ```shell
 # dnf install set-gdm-wallpaper-1-2.noarch.rpm
 ```

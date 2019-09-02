@@ -3,8 +3,7 @@ Version: 1
 Release: 3
 Summary: gdm-wallpaper
 
-Source0: wallpaper-gnome.png
-Source1: set-gdm-wallpaper.sh
+Source0: set-gdm-wallpaper.sh
 
 License: Public Domain
 
@@ -20,7 +19,7 @@ Script for GNOME 3.16+ with GNOME Shell themes packed inside /usr/share/gnome-sh
 
 %install
 mkdir -p %{buildroot}/%{_bindir}
-install -p -m 755 %{SOURCE1} %{buildroot}/%{_bindir}
+install -p -m 755 %{SOURCE0} %{buildroot}/%{_bindir}
 
 %post
 cp -s /usr/bin/set-gdm-wallpaper.sh /usr/bin/set-gdm-wallpaper

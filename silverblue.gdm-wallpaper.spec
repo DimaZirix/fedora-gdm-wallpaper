@@ -1,4 +1,4 @@
-Name:    gdm-wallpaper
+Name:    gdm-wallpaper.silver
 Version: 1
 Release: 3
 Summary: gdm-wallpaper

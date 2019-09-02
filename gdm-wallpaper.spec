@@ -1,6 +1,6 @@
 Name:    gdm-wallpaper
 Version: 1
-Release: 2
+Release: 3
 Summary: gdm-wallpaper
 
 Source0: wallpaper-gnome.png

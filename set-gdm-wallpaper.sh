@@ -43,7 +43,6 @@ echo "Updating wallpaper..."
 
 workdir=$(mktemp -d)
 cd "$workdir"
-echo $workdir
 
 # Creating gnome-shell-theme.gresource.xml with theme file list and add header
 echo '<?xml version="1.0" encoding="UTF-8"?>' > "$workdir/gnome-shell-theme.gresource.xml"

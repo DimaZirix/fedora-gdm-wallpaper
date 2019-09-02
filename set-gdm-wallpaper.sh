@@ -20,8 +20,9 @@ then
   exit 1
 fi
 
-if [ "$1" == "--uninstall" ]
-then
+if [ "$1" = "--uninstall" ]; then
+  # Restore file if current gresource file is modified by this script.
+  # If wallpaper-gdm.png text inside gresource file, then this is modified file.
   if grep -q "wallpaper-gdm.png" /usr/share/gnome-shell/gnome-shell-theme.gresource; then
     cp -f /usr/share/gnome-shell/gnome-shell-theme.gresource.backup /usr/share/gnome-shell/gnome-shell-theme.gresource
 
@@ -31,57 +32,59 @@ then
   exit
 fi
 
-workdir="/usr/share/gnome-shell/wallpaper"
+image="$1"
 
-if [ "$1" == "--rpm" ]
-then
-  image="$workdir/wallpaper-gnome.png"
-else
-  image="$1"
-fi
-
-if [ ! -f $image ]
-then
+if [ ! -f "$image" ]; then
   echo "File not found: \"$image\" "
   exit 1
 fi
 
 echo "Updating wallpaper..."
 
-mkdir -p $workdir/theme
+workdir=$(mktemp -d)
+cd "$workdir"
+echo $workdir
 
-echo '<?xml version="1.0" encoding="UTF-8"?>' > $workdir/gnome-shell-theme.gresource.xml
-echo '<gresources><gresource prefix="/org/gnome/shell/theme">' >> $workdir/gnome-shell-theme.gresource.xml
+# Creating gnome-shell-theme.gresource.xml with theme file list and add header
+echo '<?xml version="1.0" encoding="UTF-8"?>' > "$workdir/gnome-shell-theme.gresource.xml"
+echo '<gresources><gresource>' >> "$workdir/gnome-shell-theme.gresource.xml"
 
-for r in `gresource list /usr/share/gnome-shell/gnome-shell-theme.gresource`; do
-  gfile="${r#\/org\/gnome\/shell\/theme/}";
-  mkdir -p "$(dirname $workdir/theme/$gfile)"
+for res_file in $(gresource list /usr/share/gnome-shell/gnome-shell-theme.gresource); do
+  mkdir -p "$(dirname "$workdir$res_file")"
 
-  if [ "$gfile" != "wallpaper-gdm.png" ]; then
-    gresource extract /usr/share/gnome-shell/gnome-shell-theme.gresource $r >$workdir/theme/$gfile
-    echo "<file>$gfile</file>" >> $workdir/gnome-shell-theme.gresource.xml
+  if [ "$res_file" != "/org/gnome/shell/theme/wallpaper-gdm.png" ]; then
+    # extract file ($res_file) from current theme and write it to temp dir ($workdir)
+    gresource extract /usr/share/gnome-shell/gnome-shell-theme.gresource "$res_file" > "$workdir$res_file"
+
+    # add extracted file name to gnome-shell-theme.gresource.xml
+    echo "<file>${res_file#\/}</file>" >> "$workdir/gnome-shell-theme.gresource.xml"
   fi
 done
 
-echo "<file>wallpaper-gdm.png</file>" >> $workdir/gnome-shell-theme.gresource.xml
-cp -f $image $workdir/theme/wallpaper-gdm.png
+# add our image ($image) to theme path and to xml file
+echo "<file>org/gnome/shell/theme/wallpaper-gdm.png</file>" >> "$workdir/gnome-shell-theme.gresource.xml"
+cp -f "$image" "$workdir/org/gnome/shell/theme/wallpaper-gdm.png"
 
-echo '</gresource></gresources>' >> $workdir/gnome-shell-theme.gresource.xml
+# add footer to xml file
+echo '</gresource></gresources>' >> "$workdir/gnome-shell-theme.gresource.xml"
 
-sed -i -e 's/background: #2e3436 url(resource:\/\/\/org\/gnome\/shell\/theme\/noise-texture.png);/background: #2e3436 url(resource:\/\/\/org\/gnome\/shell\/theme\/wallpaper-gdm.png);background-size: cover;/g' $workdir/theme/gnome-shell.css
+# find line with background file name inside gnome-shell.css and replace it with wallpaper-gdm.png
+sed -i -e 's/background: #2e3436 url(resource:\/\/\/org\/gnome\/shell\/theme\/noise-texture.png);/background: #2e3436 url(resource:\/\/\/org\/gnome\/shell\/theme\/wallpaper-gdm.png);background-size: cover;/g' "$workdir/org/gnome/shell/theme/gnome-shell.css"
 
-cd $workdir/theme
-glib-compile-resources $workdir/gnome-shell-theme.gresource.xml
+# create gresource file with file list inside gnome-shell-theme.gresource.xml
+glib-compile-resources "$workdir/gnome-shell-theme.gresource.xml"
 
+# Do backup only for original gresource file, not modified by this script.
+# If wallpaper-gdm.png text inside gresource file, then this is modified file.
 if ! grep -q "wallpaper-gdm.png" /usr/share/gnome-shell/gnome-shell-theme.gresource; then
   cp -f /usr/share/gnome-shell/gnome-shell-theme.gresource /usr/share/gnome-shell/gnome-shell-theme.gresource.backup
   echo "Backup"
 fi
 
-cp -f $workdir/gnome-shell-theme.gresource /usr/share/gnome-shell/
+cp -f "$workdir/gnome-shell-theme.gresource" /usr/share/gnome-shell/
 
-rm -rf $workdir/theme
-rm -f $workdir/gnome-shell-theme.gresource.xml
-rm -f $workdir/gnome-shell-theme.gresource
+rm -rf "$workdir/theme"
+rm -f "$workdir/gnome-shell-theme.gresource.xml"
+rm -f "$workdir/gnome-shell-theme.gresource"
 
 echo "Done!"

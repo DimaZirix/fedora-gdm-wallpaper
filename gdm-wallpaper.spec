@@ -26,7 +26,7 @@ mkdir -p %{buildroot}/%{_bindir}
 install -p -m 755 %{SOURCE1} %{buildroot}/%{_bindir}
 
 %post
-set-gdm-wallpaper.sh --rpm
+set-gdm-wallpaper.sh /usr/share/gnome-shell/wallpaper/wallpaper-gnome.png
 
 %files
 %{_bindir}/set-gdm-wallpaper.sh

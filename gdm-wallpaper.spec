@@ -16,14 +16,17 @@ Requires: glib2-devel
 BuildArch: noarch
 
 %description
-gdm-wallpaper
+Script for GNOME 3.16+ with GNOME Shell themes packed inside /usr/share/gnome-shell/gnome-shell-theme.gresource.
 
 %install
-mkdir -p %{buildroot}/usr/share/gnome-shell/wallpaper/
-install -p -m 644 %{SOURCE0} %{buildroot}/usr/share/gnome-shell/wallpaper/
-
 mkdir -p %{buildroot}/%{_bindir}
 install -p -m 755 %{SOURCE1} %{buildroot}/%{_bindir}
+
+%post
+cp -s /usr/bin/set-gdm-wallpaper.sh /usr/bin/set-gdm-wallpaper
+
+%preun
+unlink /usr/bin/set-gdm-wallpaper
 
 %files
 %{_bindir}/set-gdm-wallpaper.sh

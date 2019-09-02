@@ -35,6 +35,7 @@ fi
 
 if [ "$1" = "-r" ]; then
   doResize=true
+  shift;
 fi
 
 image="$1"

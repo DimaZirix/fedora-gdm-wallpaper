@@ -95,8 +95,10 @@ fi
 
 cp -f "$workdir/gnome-shell-theme.gresource" /usr/share/gnome-shell/
 
-rm -rf "$workdir/theme"
+# Strange but safe from bug
+rm -rf "$workdir/org"
 rm -f "$workdir/gnome-shell-theme.gresource.xml"
 rm -f "$workdir/gnome-shell-theme.gresource"
+rm -r "$workdir"
 
 echo "Done!"

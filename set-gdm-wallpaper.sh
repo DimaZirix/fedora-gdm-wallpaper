@@ -16,7 +16,7 @@ if [ "$#" -eq "0" ]; then
   echo 'Usage:'
   echo '  set-gdm-wallpaper [FLAG] /path/to/image    Set login screen wallpaper'
   echo '    Flags:'
-  echo '      -r       Stretch image to fit desktop. Work incorrectly with multiple monitors!'
+  echo '      --css 'css data'                       Replace css params inside #lockDialogGroup block. Ex: background-size: 1920px 1080px;'
   echo '  set-gdm-wallpaper --uninstall              Remove changes and set original wallpaper (original gresource file)'
   exit 1
 fi
@@ -33,9 +33,10 @@ if [ "$1" = "--uninstall" ]; then
   exit
 fi
 
-if [ "$1" = "-r" ]; then
-  doResize=true
-  shift;
+image_parameters="background-repeat: repeat;"
+if [ "$1" = "--css" ]; then
+  image_parameters="$2;"
+  shift;shift;
 fi
 
 image="$1"
@@ -46,6 +47,11 @@ if [ ! -f "$image" ]; then
 fi
 
 echo "Updating wallpaper..."
+
+# Restore gresource from backup if current gresource is modified
+if grep -q "wallpaper-gdm.png" /usr/share/gnome-shell/gnome-shell-theme.gresource; then
+  cp -f /usr/share/gnome-shell/gnome-shell-theme.gresource.backup /usr/share/gnome-shell/gnome-shell-theme.gresource
+fi
 
 workdir=$(mktemp -d)
 cd "$workdir"
@@ -74,15 +80,12 @@ cp -f "$image" "$workdir/org/gnome/shell/theme/wallpaper-gdm.png"
 # add footer to xml file
 echo '</gresource></gresources>' >>"$workdir/gnome-shell-theme.gresource.xml"
 
-if [ "$doResize" = true ]
-then
- # find line with background file name inside gnome-shell.css and replace it with wallpaper-gdm.png
- # add background-size: cover for stretch image to fit desktop
- sed -i -e 's/background: #2e3436 url(resource:\/\/\/org\/gnome\/shell\/theme\/noise-texture.png);/background: #2e3436 url(resource:\/\/\/org\/gnome\/shell\/theme\/wallpaper-gdm.png);background-size: cover;/g' "$workdir/org/gnome/shell/theme/gnome-shell.css"
-else
- # find line with background file name inside gnome-shell.css and replace it with wallpaper-gdm.png
- sed -i -e 's/background: #2e3436 url(resource:\/\/\/org\/gnome\/shell\/theme\/noise-texture.png);/background: #2e3436 url(resource:\/\/\/org\/gnome\/shell\/theme\/wallpaper-gdm.png);/g' "$workdir/org/gnome/shell/theme/gnome-shell.css"
-fi
+
+# find #lockDialogGroup block inside gnome-shell.css and replace with new_theme_params with our image
+# and add image_parameters
+new_theme_params="background: #2e3436 url(resource:\/\/\/org\/gnome\/shell\/theme\/wallpaper-gdm.png);$image_parameters"
+sed -i -z -E "s/#lockDialogGroup \{[^}]+/#lockDialogGroup \{$new_theme_params/g" "$workdir/org/gnome/shell/theme/gnome-shell.css"
+
 # create gresource file with file list inside gnome-shell-theme.gresource.xml
 glib-compile-resources "$workdir/gnome-shell-theme.gresource.xml"
 

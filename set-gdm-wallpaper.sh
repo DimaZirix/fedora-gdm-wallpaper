@@ -39,7 +39,7 @@ if [ "$1" = "--css" ]; then
   shift;shift;
 fi
 
-image="$1"
+image="$(realpath "$1")"
 
 if [ ! -f "$image" ]; then
   echo "File not found: \"$image\" "

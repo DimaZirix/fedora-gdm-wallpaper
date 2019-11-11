@@ -22,10 +22,15 @@ mkdir -p %{buildroot}/%{_bindir}
 install -p -m 755 %{SOURCE0} %{buildroot}/%{_bindir}
 
 %post
+if [ -f "/usr/bin/set-gdm-wallpaper" ]; then
+ unlink /usr/bin/set-gdm-wallpaper
+fi
 cp -s /usr/bin/set-gdm-wallpaper.sh /usr/bin/set-gdm-wallpaper
 
 %preun
-unlink /usr/bin/set-gdm-wallpaper
+if [ -f "/usr/bin/set-gdm-wallpaper" ]; then
+ unlink /usr/bin/set-gdm-wallpaper
+fi
 
 %files
 %{_bindir}/set-gdm-wallpaper.sh

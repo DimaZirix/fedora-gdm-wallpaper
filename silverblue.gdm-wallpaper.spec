@@ -1,6 +1,6 @@
 Name:    gdm-wallpaper.silver
 Version: 1
-Release: 3
+Release: 4
 Summary: gdm-wallpaper
 
 Source0: wallpaper-gnome.png

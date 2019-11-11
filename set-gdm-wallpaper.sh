@@ -17,7 +17,7 @@ if [ "$#" -eq "0" ]; then
   echo '  set-gdm-wallpaper [FLAG] /path/to/image    Set login screen wallpaper'
   echo '    Flags:'
   echo '      --css 'css data'                       Replace css params inside #lockDialogGroup block. Ex: background-size: 1920px 1080px;'
-  echo '      --resize 0..6 (default: 2)             Use built-in css template for image resize and aligment. Try this option for fix multi monitor issue. Use 0 for disable resize.'
+  echo '      --resize 0..6 (default: 2)             Use built-in css template for image resize and alignment. Try this option for fix multi monitor issue. Use 0 for disable resize.'
   echo '        0 - background-repeat: repeat;'
   echo '        1 - background-repeat: no-repeat;'
   echo '        2 - background-repeat: no-repeat;background-size: cover;'

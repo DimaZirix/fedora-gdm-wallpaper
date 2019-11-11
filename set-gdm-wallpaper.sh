@@ -17,6 +17,7 @@ if [ "$#" -eq "0" ]; then
   echo '  set-gdm-wallpaper [FLAG] /path/to/image    Set login screen wallpaper'
   echo '    Flags:'
   echo '      --css 'css data'                       Replace css params inside #lockDialogGroup block. Ex: background-size: 1920px 1080px;'
+  echo '      --resize 0..5 (default: 2)             Use built-in css template for image resize and aligment. Try this option for fix multi monitor issue. Use 0 for disable resize.'
   echo '  set-gdm-wallpaper --uninstall              Remove changes and set original wallpaper (original gresource file)'
   exit 1
 fi
@@ -33,11 +34,32 @@ if [ "$1" = "--uninstall" ]; then
   exit
 fi
 
-image_parameters="background-repeat: repeat;"
+image_parameters="background-repeat: no-repeat;background-size: cover;"
 if [ "$1" = "--css" ]; then
   image_parameters="$2;"
   shift;shift;
 fi
+
+if [ "$1" = "--resize" ]; then
+  case "$2" in
+    0) image_parameters="background-repeat: repeat;";;
+    1) image_parameters="background-repeat: no-repeat;";;
+    2) image_parameters="background-repeat: no-repeat;background-size: cover;";;
+    3) image_parameters="background-size: 1920px 1080px;";;
+    4) image_parameters="background-size: 1920px 1080px;background-repeat: repeat;";;
+    5) image_parameters="background-position: 0 0;background-size: 1920px 1080px;background-repeat: repeat;";;
+    6) image_parameters="background-repeat: no-repeat;background-size: cover;background-position: center;";;
+    *)
+      echo "Error: unknown --resize value"
+      exit 1;;
+  esac
+  shift;shift;
+fi
+
+  if [ "$#" -ne "1" ]; then
+    echo "Error: Illegal argument $1"
+    exit 1
+  fi
 
 image="$(realpath "$1")"
 

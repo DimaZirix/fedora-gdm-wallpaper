@@ -11,10 +11,10 @@ But should work on any distro with /usr/share/gnome-shell/gnome-shell-theme.gres
 # Usage
 ```shell
 set-gdm-wallpaper.sh /path/to/image.png
-(use --resize N option for fixing multiple monitor issues)
+# (use --resize N option for fixing multiple monitor issues)
 
-Script requires gresource binary (glib2 or glib2-devel library):
-Fedora: 
+# Script requires gresource binary (glib2 or glib2-devel library):
+# Fedora: 
 dnf install glib2-devel
 ```
 Fedora Silverblue

@@ -115,6 +115,13 @@ echo '</gresource></gresources>' >>"$workdir/gnome-shell-theme.gresource.xml"
 new_theme_params="background: #2e3436 url(resource:\/\/\/org\/gnome\/shell\/theme\/wallpaper-gdm.png);$image_parameters"
 sed -i -z -E "s/#lockDialogGroup \{[^}]+/#lockDialogGroup \{$new_theme_params/g" "$workdir/org/gnome/shell/theme/gnome-shell.css"
 
+# fix gdm 44
+echo '
+.login-dialog {
+background-color: transparent;
+}
+' >>"$workdir/org/gnome/shell/theme/gnome-shell.css"
+
 # create gresource file with file list inside gnome-shell-theme.gresource.xml
 glib-compile-resources "$workdir/gnome-shell-theme.gresource.xml"
 

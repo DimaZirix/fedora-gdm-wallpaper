@@ -113,7 +113,7 @@ echo '</gresource></gresources>' >>"$workdir/gnome-shell-theme.gresource.xml"
 # find #lockDialogGroup block inside gnome-shell.css and replace with new_theme_params with our image
 # and add image_parameters
 new_theme_params="background: #2e3436 url(resource:\/\/\/org\/gnome\/shell\/theme\/wallpaper-gdm.png);$image_parameters"
-sed -i -z -E "s/#lockDialogGroup \{[^}]+/#lockDialogGroup \{$new_theme_params/g" "$workdir/org/gnome/shell/theme/gnome-shell.css"
+sed -i -z -E "s/#lockDialogGroup \{[^}]+/#lockDialogGroup \{$new_theme_params/g" "$workdir/org/gnome/shell/theme/gnome-shell-dark.css"
 
 # fix gdm 44
 echo '

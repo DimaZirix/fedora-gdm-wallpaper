@@ -1,6 +1,6 @@
 Name:    gdm-wallpaper
 Version: 1
-Release: 4
+Release: 5
 Summary: gdm-wallpaper
 
 Source0: set-gdm-wallpaper.sh
